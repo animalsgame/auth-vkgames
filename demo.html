@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+body, html{
+margin:10px;
+font-family:Arial;
+font-size:18px;
+background:#FFFFFF;
+}
+</style>
+
+<!-- подключаем скрипт vk bridge, иначе вообще ничего не увидим, кроме загрузочного экрана игры... -->
+<script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+
+</head>
+
+<body>
+
+<div id="auth" style="text-align:center;">Идёт авторизация...</div>
+
+<script>
+
+if(window.vkBridge){ // если вдруг unpkg.com откажет, так хоть не поломается отправка запроса на сервер, запасной вариант это консоль, в неё ещё отправим результат авторизации
+vkBridge.send('VKWebAppInit'); // если не отправить это событие, мы увидим только загрузочный экран игры
+}
+
+// пример как отправить данные через POST на php скрипт, все параметры находятся в window.location.search
+
+var scriptURL = 'demo.php';
+
+var params = new FormData();
+params.append('s', window.location.search);
+
+fetch(scriptURL, {method:'POST',body:params}).then(res => res.text()).then((result) => {
+var d = document.getElementById('auth');
+console.log('Результат:', result);
+d.innerHTML = result;
+});
+
+</script>
+
+</body>
+
+</html>
