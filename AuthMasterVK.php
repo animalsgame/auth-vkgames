@@ -99,7 +99,6 @@ return null;
 
 // главная функция авторизации, результат строка (id пользователя) либо null если авторизация не прошла
 public function auth($url = null){
-$result = null;
 $params = $this->prepareStrParams($url);
 if($params){
 
